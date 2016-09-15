@@ -11,7 +11,7 @@ using System.Net.Http;
 
 namespace GitRelease1._2
 {
-   
+
     class Program
     {
         static void Main(string[] args)
@@ -24,7 +24,7 @@ namespace GitRelease1._2
             var owner = "Jennyf19";
             var repoName = "BinaryTree";
             var client = new GitHubClient(new ProductHeaderValue("JennysAwesomeGitRelease"), new Uri("https://github.com/"));
-            client.Credentials = new Credentials("19d9306f0bff81971282e69b4fde3f9f7f8dc84f");
+            client.Credentials = new Credentials("b3fa480bc517239f25ce103514471fcdac2ee49e");
             var repository = client.Repository.Get(owner, repoName);
 
             Repository result = await client.Repository.Get("jennyf19", "BinaryTree");
@@ -71,19 +71,14 @@ namespace GitRelease1._2
             var tag = await client.Git.Tag.Get("jennyf19", "binaryTree", "v1.0.0");
 
             if (tag == null) Console.WriteLine("null again!");
-            else
-            {try
-                {
-                    tag = await client.Git.Tag.Get("jennyf19", "binaryTree", "v1.0.0");
-                }
-                catch
-                {
-                    throw new NotFoundException("error", HttpStatusCode.NotFound);
-                }
-
-                {
-                    Console.WriteLine("Not found exception again");
-                }
+            try
+            {
+                Console.WriteLine("Trying again");
+            }
+            catch (NotFoundException a)
+            {
+                Console.WriteLine("Not found exception again");
+           
                 if (tag == null) Console.WriteLine("Null!");
                 else
                 {
@@ -99,6 +94,8 @@ namespace GitRelease1._2
                 }
 
                 Console.WriteLine("All done.");
+            }
+        }
 
                 #region Getting Started Code Sample
                 /*public static async void myAsyncMethod()
@@ -168,8 +165,34 @@ namespace GitRelease1._2
                     Console.WriteLine("All done.");
                 }*/
                 #endregion
+
+
+                // override object.Equals
+        public override bool Equals(object obj)
+        {
+            //       
+            // See the full list of guidelines at
+            //   http://go.microsoft.com/fwlink/?LinkID=85237  
+            // and also the guidance for operator== at
+            //   http://go.microsoft.com/fwlink/?LinkId=85238
+            //
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
             }
 
+            // TODO: write your implementation of Equals() here
+            throw new NotImplementedException();
+            return base.Equals(obj);
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            // TODO: write your implementation of GetHashCode() here
+            throw new NotImplementedException();
+            return base.GetHashCode();
         }
     }
 }
